@@ -116,8 +116,9 @@
       (setq beg (point))
       (loop for (k v) on (car info) by 'cddr
             for h = (substring (symbol-name k) 1)
-            for w in widths
-            with curcol = (current-column)
+            ;; use a small nonzero value for last column
+            for w in (append (butlast widths) '(1))
+            for curcol = (current-column)
             unless (zerop w)
             do
             (case index
@@ -126,8 +127,7 @@
               (otherwise (and v (insert v))))
             (indent-to (+ curcol w))
             ;; insert a space between each column
-            (insert " ")
-            (setq curcol (current-column)))
+            (insert " "))
       (insert "\n")
       (when (> index 2)
         (put-text-property beg (point) 'process-name
