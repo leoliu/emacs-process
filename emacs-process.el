@@ -100,9 +100,12 @@
 (defun emacs-process-compute-widths (info)
   "Compute the width of each column."
   (loop for (key value) on (car info) by 'cddr
-        collect (max (loop for i in info
+        for pwidth = (loop for i in info
                            maximize (length (plist-get i key)))
-                     (1- (length (symbol-name key))))))
+        ;; don't display column with width zero
+        collect (if (zerop pwidth)
+                    0
+                  (max pwidth (1- (length (symbol-name key)))))))
 
 ;;; Note: the key of the plist is used as heading
 (defun emacs-process-insert (info)
