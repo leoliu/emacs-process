@@ -38,6 +38,8 @@
 (defun emacs-process-delete (name)
   (interactive
    (list (let ((def (get-text-property (point) 'process-name)))
+           (unless (and def (processp (get-process def)))
+             (setq def nil))
            (completing-read (if def
                                 (format "Delete process (default %s): " def)
                               "Delete process: ")
