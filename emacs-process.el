@@ -157,6 +157,8 @@ after the listing is made."
           (goto-char (point-min))
           (forward-line (1- line))
           (display-buffer (current-buffer)))
+      (when (get-buffer "*Process List*")
+        (kill-buffer "*Process List*"))
       (message "Process list empty"))))
 
 (provide 'emacs-process)
