@@ -142,14 +142,17 @@ Any process listed as exited or signaled is actually eliminated
 after the listing is made."
   (interactive "P")
   (let ((info (emacs-process-info query-only))
-        (inhibit-read-only t))
+        (inhibit-read-only t)
+        line)
     (if info
         (with-current-buffer (get-buffer-create "*Process List*")
+          (setq line (line-number-at-pos))
           (erase-buffer)
           (emacs-process-insert info)
           (set-buffer-modified-p nil)
-          (goto-char (point-min))
           (emacs-process-mode)
+          (goto-char (point-min))
+          (forward-line (1- line))
           (display-buffer (current-buffer)))
       (message "Process list empty"))))
 
