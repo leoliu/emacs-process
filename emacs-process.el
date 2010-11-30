@@ -141,17 +141,16 @@ the query-on-exit flag set will be listed.
 Any process listed as exited or signaled is actually eliminated
 after the listing is made."
   (interactive "P")
-  (let* ((buf (get-buffer-create "*Process List*"))
-         (inhibit-read-only t)
-         (info (emacs-process-info query-only)))
-    (with-current-buffer buf
-      (erase-buffer)
-      (emacs-process-insert info)
-      (set-buffer-modified-p nil)
-      (goto-char (point-min))
-      (emacs-process-mode))
+  (let ((info (emacs-process-info query-only))
+        (inhibit-read-only t))
     (if info
-        (display-buffer buf)
+        (with-current-buffer (get-buffer-create "*Process List*")
+          (erase-buffer)
+          (emacs-process-insert info)
+          (set-buffer-modified-p nil)
+          (goto-char (point-min))
+          (emacs-process-mode)
+          (display-buffer (current-buffer)))
       (message "Process list empty"))))
 
 (provide 'emacs-process)
