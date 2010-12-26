@@ -137,7 +137,10 @@
         (pop info)))))
 
 ;;;###autoload
-(defalias 'list-processes 'emacs-process-list)
+(when (subrp (symbol-function 'list-processes))
+  (fset 'list-processes-primitive (symbol-function 'list-processes))
+  (defalias 'list-processes 'emacs-process-list))
+
 ;;;###autoload
 (defun emacs-process-list (&optional query-only)
   "Display a list of all processes.
