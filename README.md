@@ -1,3 +1,11 @@
+Update - 2011/04/04
+----------
+
+Yidong Chong (maintainer of Emacs) has posted a patch here:
+[list-processes reimplementation, and list/menu buffers](http://article.gmane.org/gmane.emacs.devel/138093)
+So list-processes will be implemented in elisp in Emacs >= 24 and thus
+this package is not needed for Emacs >= 24.
+
 Why?
 ----------
 
